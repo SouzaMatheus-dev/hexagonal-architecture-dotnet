@@ -167,54 +167,6 @@ curl -X PATCH "https://localhost:5001/api/orders/{order-id}/status" \
 
 **Nota**: O Postman aceita tanto `snake_case` (customer_name) quanto `PascalCase` (CustomerName) nos campos.
 
-## Demonstrando a Flexibilidade
-
-### Cenário 1: Trocar Adapter de Entrada
-
-Você pode facilmente adicionar um novo adapter de entrada (ex: GraphQL) sem alterar o core:
-
-1. Crie `Adapters.Input.GraphQL`
-2. Implemente resolvers que usam `ICreateOrderUseCase`, `IGetOrderUseCase`, etc.
-3. Registre no Host
-
-**Resultado**: Mesmo domínio, mesma lógica, novo protocolo.
-
-### Cenário 2: Trocar Adapter de Saída
-
-Você pode trocar o repositório de In-Memory para Entity Framework:
-
-1. Crie `Adapters.Output.EfCore`
-2. Implemente `IOrderRepository` usando EF Core
-3. Altere apenas uma linha no `DependencyInjection.cs`:
-
-```csharp
-// Antes:
-services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
-
-// Depois:
-services.AddScoped<IOrderRepository, EfCoreOrderRepository>();
-```
-
-**Resultado**: Zero alterações no core, zero alterações nos adapters de entrada.
-
-### Cenário 3: Trocar Serviço de Notificação
-
-Você pode trocar de Console para Email real:
-
-1. Crie `Adapters.Output.Email`
-2. Implemente `INotificationService` usando SMTP
-3. Altere apenas uma linha:
-
-```csharp
-// Antes:
-services.AddScoped<INotificationService, ConsoleNotificationService>();
-
-// Depois:
-services.AddScoped<INotificationService, EmailNotificationService>();
-```
-
-**Resultado**: Emails reais enviados, sem alterar nada mais.
-
 ## Testando Validações de Negócio
 
 ### Teste 1: Tentar confirmar pedido que não está pendente

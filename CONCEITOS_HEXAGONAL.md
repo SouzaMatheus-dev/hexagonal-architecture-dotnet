@@ -317,43 +317,6 @@ Adapters podem ser **trocados** sem alterar o Core.
 
 Responsabilidades são **claramente separadas**.
 
-## Análise da Implementação
-
-### Core.Domain
-
-- Sem dependências externas
-- Apenas entidades e regras de negócio
-- Pode ser testado isoladamente
-
-### Core.Application
-
-- Depende apenas de Core.Domain
-- Define Input Ports (interfaces para Use Cases)
-- Define Output Ports (interfaces para Adapters)
-- Use Cases usam interfaces, não implementações
-
-### Adapters.Input.RestApi
-
-- Depende apenas de Core.Application
-- Converte HTTP → Use Cases
-- Não conhece implementações dos Output Adapters
-
-### Adapters.Input.Grpc
-
-- Depende apenas de Core.Application
-- Converte gRPC → Use Cases
-- Mesma lógica que REST, protocolo diferente
-
-### Adapters.Output.Persistence
-
-- Implementa IOrderRepository
-- Pode ser trocado por outra implementação facilmente
-
-### Adapters.Output.External
-
-- Implementa INotificationService
-- Pode ser trocado por outra implementação facilmente
-
 ## Conceitos Avançados
 
 ### Dependency Injection (DI)
@@ -375,53 +338,12 @@ services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
 - **Clean Architecture**: Estruturada em camadas (Domain, Application, Infrastructure)
 - Ambas buscam **isolar o domínio**, mas com organizações diferentes
 
-## Fluxo de Dados Completo
-
-### Exemplo: Criar um Pedido via REST
-
-```mermaid
-sequenceDiagram
-    participant Client as Cliente HTTP
-    participant Controller as OrdersController<br/>(Input Adapter)
-    participant UseCase as CreateOrderUseCase<br/>(Use Case)
-    participant Domain as Order<br/>(Domain)
-    participant Repo as InMemoryOrderRepository<br/>(Output Adapter)
-    participant Notif as ConsoleNotificationService<br/>(Output Adapter)
-
-    Client->>Controller: POST /api/orders<br/>(JSON)
-    Controller->>Controller: Converte JSON → CreateOrderCommand
-    Controller->>UseCase: ExecuteAsync(command)
-    UseCase->>UseCase: Valida dados
-    UseCase->>Domain: new Order(...)
-    UseCase->>Repo: SaveAsync(order)
-    Repo->>Repo: Salva em memória
-    Repo-->>UseCase: Order salvo
-    UseCase->>Notif: SendOrderConfirmationAsync(...)
-    Notif->>Notif: Imprime no console
-    Notif-->>UseCase: Notificação enviada
-    UseCase-->>Controller: Order criado
-    Controller-->>Client: 201 Created (JSON)
-```
-
-## Benefícios Práticos
-
-1. **Trocar Banco de Dados**: Altere apenas o Output Adapter
-2. **Adicionar Novo Protocolo**: Crie novo Input Adapter (GraphQL, Kafka, etc.)
-3. **Testar Isoladamente**: Mock os Output Ports
-4. **Evoluir Gradualmente**: Adicione novos adapters sem quebrar o Core
-
 ## Recursos para Aprofundar
 
 1. [Hexagonal Architecture - Alistair Cockburn](https://alistair.cockburn.us/hexagonal-architecture/)
 2. [Ports and Adapters Pattern](https://www.hexagonalarchitecture.net/)
 3. Artigo mencionado: [Hexagonal Architecture Demystified](https://medium.com/beyond-the-brackets/hexagonal-architecture-demystified-94fd4f9c49ce)
 
-## Conclusão
+---
 
-A implementação segue corretamente os princípios da Arquitetura Hexagonal:
-
-- Domínio isolado (sem dependências)
-- Ports bem definidos (Input e Output)
-- Adapters implementando Ports corretamente
-- Direção de dependências correta
-- Flexibilidade para trocar adapters
+Para análise específica da implementação deste projeto, consulte `ANALISE_IMPLEMENTACAO.md`.

@@ -298,15 +298,6 @@ Adapters.Output.External
 | **Flexibilidade**           | Correto | Adapters facilmente substituíveis |
 | **Clareza**                 | Correto | Responsabilidades claras          |
 
-## Conceitos Demonstrados
-
-1. **Ports (Portas)**: Interfaces que definem contratos
-2. **Adapters (Adaptadores)**: Implementações que conectam Core ao mundo exterior
-3. **Input Ports**: Como o mundo exterior pode usar a aplicação
-4. **Output Ports**: O que a aplicação precisa do mundo exterior
-5. **Use Cases**: Orquestram o domínio usando interfaces
-6. **Dependency Injection**: Conecta Ports com Adapters
-
 ## Conclusão
 
 A implementação segue os princípios da Arquitetura Hexagonal:
