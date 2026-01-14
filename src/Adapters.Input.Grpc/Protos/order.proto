@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option csharp_namespace = "Adapters.Input.Grpc";
+
+package order;
+
+// Serviço de gRPC para gerenciamento de pedidos
+service OrderService {
+  // Cria um novo pedido via gRPC
+  rpc CreateOrder (CreateOrderRequest) returns (OrderResponse);
+  
+  // Obtém um pedido pelo ID
+  rpc GetOrder (GetOrderRequest) returns (OrderResponse);
+  
+  // Atualiza o status de um pedido
+  rpc UpdateOrderStatus (UpdateOrderStatusRequest) returns (OrderResponse);
+}
+
+// Mensagens de requisição e resposta
+message CreateOrderRequest {
+  string customer_name = 1;
+  string customer_email = 2;
+  repeated OrderItemRequest items = 3;
+}
+
+message OrderItemRequest {
+  string product_id = 1;
+  string product_name = 2;
+  double price = 3;
+  int32 quantity = 4;
+}
+
+message GetOrderRequest {
+  string order_id = 1;
+}
+
+message UpdateOrderStatusRequest {
+  string order_id = 1;
+  string status = 2;
+}
+
+message OrderResponse {
+  string order_id = 1;
+  string customer_name = 2;
+  string customer_email = 3;
+  double total_amount = 4;
+  string status = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  repeated OrderItemResponse items = 8;
+}
+
+message OrderItemResponse {
+  string product_id = 1;
+  string product_name = 2;
+  double price = 3;
+  int32 quantity = 4;
+}
