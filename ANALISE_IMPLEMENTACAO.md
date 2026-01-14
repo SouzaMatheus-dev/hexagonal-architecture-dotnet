@@ -309,12 +309,3 @@ A implementação segue os princípios da Arquitetura Hexagonal:
 - Flexibilidade demonstrada (REST e gRPC)
 
 ---
-
-## Próximos Passos
-
-1. **Adicionar Testes**: Testes unitários do Core usando mocks
-2. **Novo Adapter de Entrada**: GraphQL, CLI, etc.
-3. **Novo Adapter de Saída**: EF Core, MongoDB, Email real, etc.
-4. **Event Sourcing**: Eventos de domínio
-5. **CQRS**: Separação de Command e Query
-6. **Value Objects**: Enriquecer o domínio com Value Objects
