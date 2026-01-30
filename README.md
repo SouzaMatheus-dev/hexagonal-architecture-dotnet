@@ -143,7 +143,6 @@ Para mais informações, consulte:
 
 - `ARQUITETURA.md` - Documentação detalhada da arquitetura
 - `CONCEITOS_HEXAGONAL.md` - Conceitos fundamentais da Arquitetura Hexagonal
-- `ANALISE_IMPLEMENTACAO.md` - Análise da implementação
 - `EXEMPLOS.md` - Exemplos práticos de uso
 
 ## Licença
